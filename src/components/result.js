@@ -9,9 +9,9 @@ export default class Result extends Component {
 
   render () {
     return (
-      <div className="result">
+      <div className="result text-center">
         <h1>Результат проверки</h1>
-        <p>Минимальный возрастной рейтинг игры - <strong>{this.props.result}</strong> (года) лет</p>
+        <p>Минимальный возрастной рейтинг игры - <strong>{this.props.result}</strong> лет</p>
       </div>
     )
   }

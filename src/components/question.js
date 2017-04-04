@@ -9,15 +9,25 @@ export default class Question extends Component {
 
   render () {
     return (
-      <div className="question-wrap">
-        <h1 className='question-number'>Вопрос №{this.props.number}</h1>
-        <p className='question-text'>{this.props.text}</p>
-        <button className="question-answer-yes" onClick={() => this.props.onAnswer(true)}>
-          Да
-        </button>
-        <button className="question-answer-no" onClick={() => this.props.onAnswer(false)}>
-          Нет
-        </button>
+      <div className="container">
+        <div className="row">
+          <div className="col-md-12 text-center">
+            <h1 className='question-number'>Вопрос №{this.props.number}</h1>
+          </div>
+          <div className="col-md-12">
+            <p className='question-text'>{this.props.text}</p>
+          </div>
+          <div className="col-md-6 text-center">
+            <button onClick={() => this.props.onAnswer(true)}>
+              Да
+            </button>
+          </div>
+          <div className="col-md-6 text-center">
+            <button onClick={() => this.props.onAnswer(false)}>
+              Нет
+            </button>
+          </div>
+        </div>
       </div>
     )
   }

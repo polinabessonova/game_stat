@@ -13,32 +13,35 @@ export default class Survey extends Component {
 
   state = {
     result: 0,
-    currentQuestionIdx: 0
+    answers: {}
   }
 
-  onAnswer = (value) => {
+  onAnswer = (value, q, i) => {
+    const answers = {
+      ...this.state.answers,
+      [i]: { age: this.props.questions[ i ][ value ? "whenTrue" : "whenFalse" ] }
+    }
     this.setState({
-      currentQuestionIdx: this.state.currentQuestionIdx + 1,
-      result: Math.max(this.props.questions[ this.state.currentQuestionIdx ][ value ? 'whenTrue' : 'whenFalse' ], this.state.result)
+      answers,
+      result: Object.values(answers).reduce((a, b) => Math.max(a, b.age), 0)
     })
   }
 
   render () {
-    if (this.props.questions.length == this.state.currentQuestionIdx) {
-      return (
+    return (
+      <div>
+        {this.props.questions.map((q, i) => (
+          <Question onAnswer={(value) => this.onAnswer(value, q, i)} {...q}/>
+        ))}
         <div>
-          <div>
-            <Result result={this.state.result}/>
-          </div>
-          <div>
-            <button onClick={() => this.setState({ currentQuestionIdx: 0, result: 0 })}>Еще раз</button>
-          </div>
+          <Result result={this.state.result}/>
         </div>
-      )
-    } else {
-      return (
-        <Question onAnswer={this.onAnswer} {...this.props.questions[ this.state.currentQuestionIdx ]}/>
-      )
-    }
+        <div className="text-center" style={{ paddingBottom: 25 }}>
+          <button onClick={() => this.setState({ result: 0, answers: {} })}>
+            Еще раз!
+          </button>
+        </div>
+      </div>
+    )
   }
 }
